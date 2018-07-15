@@ -1,21 +1,10 @@
-/* import { controller, httpGet, httpPost, httpPut, httpDelete, BaseHttpController } from 'inversify-express-utils';
-import { inject } from 'inversify';
-import { Request, Response } from 'express';
-
-import { authMiddleware } from '../middleware/AuthMiddleware';
-
-import IController from './IController';
-
-import ClientService from '../service/ClientService';
-
-import Client  from '../models/Client'; */
 
 const clientService = require("../service/client.service");
 
-exports.getByName = (req, res) => { 
+exports.getByName = async (req, res) => { 
   const name = (req.query.name) ? req.query.name : res.sendStatus(400)
-  const clients = clientService.getByName(name);
-  res.send({ clients });
+  const client = await clientService.getByName(name);
+  res.send( { client: client } );
 }
 /*  constructor( @inject(TYPES.ClientService) private clientService: ClientService) { super() }
 
