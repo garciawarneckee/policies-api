@@ -4,7 +4,7 @@ const endpoints = require("../endpoints");
 exports.getAllById = async (id) => {
     const response = await axios.get(endpoints.policies);
     const data = response.data;
-    policies = data.policies.filter( c => c.clientId == id);
+    policies = data.policies.filter( p => p.clientId == id);
     return policies;
 }
 

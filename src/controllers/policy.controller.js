@@ -11,7 +11,7 @@ exports.getByAllByName = async (req, res) => {
     return; 
   }
   
-  const policies = await policyService.getAllById(client.clientId);
+  const policies = await policyService.getAllById(client.id);
 
   res.send( { policies: policies } );
 }
