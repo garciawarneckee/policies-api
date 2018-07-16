@@ -3,8 +3,10 @@ const router = express.Router();
 
 const clientController = require("../controllers/client.controller");
 
-router.get("/:id", clientController.getById);
-router.get("/", clientController.getByName);
-router.get("/policy/:id", clientController.getByPolicyNumber);
+const authMiddleware = require("../middleware/auth.middleware");
+
+router.get("/:id", [authMiddleware.isUserOrAdmin, clientController.getById]);
+router.get("/", [authMiddleware.isUserOrAdmin, clientController.getByName]);
+router.get("/policy/:id", [authMiddleware.isAdmin, clientController.getByPolicyNumber]);
 
 module.exports = router;

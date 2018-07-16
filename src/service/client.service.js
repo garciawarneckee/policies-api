@@ -19,3 +19,10 @@ exports.getById = async (id) => {
     client = data.clients.find( c => c.id === id );
     return client;
 }
+
+exports.getByNameAndEmail = async (name, email) => {
+    const response = await axios.get(endpoints.clients);
+    const data = response.data;
+    client = data.clients.find( c => c.name == name && c.email == email );
+    return client;
+}
