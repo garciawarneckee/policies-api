@@ -7,11 +7,11 @@ exports.getByAllByName = async (req, res) => {
   //Get the client
   const client = await clientService.getByName(name);
   if(!client) { 
-    res.sendStatus(404); 
+    res.status(404).send({ message: "Client not found" }); 
     return; 
   }
   
-  const policies = await policyService.getAllById(client.id);
+  const policies = await policyService.getAllByClientId(client.id);
 
   res.send( { policies: policies } );
 }
