@@ -4,7 +4,7 @@ exports.isUserOrAdmin = (req, res, next) => {
         return;
     } 
 
-    if(req.session.role === "user" && req.session.role === "admin") {
+    if(req.session.role === "user" || req.session.role === "admin") {
         next();
     } else {
         res.status(403).send({ message: "Forbidden" });
