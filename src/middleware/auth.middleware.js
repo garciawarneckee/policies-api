@@ -1,5 +1,7 @@
+const config = require("../../config");
+
 exports.isUserOrAdmin = (req, res, next) => {
-    if (process.env.NODE_ENV === 'mocha'){
+    if (!config.enableSecurityMiddleware) {
         next();
         return;
     }

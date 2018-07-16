@@ -1,9 +1,9 @@
 const loginService = require("../service/login.service");
 
 exports.login = (req, res) => {
-    const name = req.body.name;
-    const email =  req.body.email; 
-    loginService.login(name, email)
+    const username = req.body.username;
+    const password =  req.body.password; 
+    loginService.login(username, password)
         .then((client) => {
             if(!client){
                 res.status(401).send({ message: "Unauthorized" });
@@ -21,7 +21,7 @@ exports.login = (req, res) => {
 
 exports.logout = (req, res) => {
     req.session.destroy((err) => { if(err) { delete req.session } });
-    res.status(401).send( { message: "Unauthorized"} );
+    res.send( { message: "Logout successful" } );
 }
 
 exports.isLogged = (req, res) => {
