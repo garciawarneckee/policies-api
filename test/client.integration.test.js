@@ -7,6 +7,7 @@ const request = require('supertest');
 const expect = chai.expect;
 
 describe('Client API Integration Tests', function() {
+
   // TODO: Ask for test client and policy in external API's. 
   // This is to prevent tests failure with possible changes in production data.
   const client = {
