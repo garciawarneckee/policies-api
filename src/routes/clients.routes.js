@@ -5,8 +5,8 @@ const clientController = require("../controllers/client.controller");
 
 const authMiddleware = require("../middleware/auth.middleware");
 
-router.get("/:id", [authMiddleware.isAdmin, clientController.getById]);
-router.get("/", clientController.getByName);
-router.get("/policy/:id", clientController.getByPolicyNumber);
+router.get("/:id", [authMiddleware.isUserOrAdmin, clientController.getById]);
+router.get("/", [authMiddleware.isUserOrAdmin, clientController.getByName]);
+router.get("/policy/:id", [authMiddleware.isAdmin, clientController.getByPolicyNumber]);
 
 module.exports = router;
