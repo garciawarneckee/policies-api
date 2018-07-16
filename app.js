@@ -10,3 +10,5 @@ server.use("/auth", authRoutes);
 
 server.listen(3000);
 console.log("Server up and listening in port 3000");
+
+module.exports = server;
