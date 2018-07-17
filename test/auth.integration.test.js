@@ -27,7 +27,7 @@ describe('Auth API Integration Tests', () => {
         }); 
     });
 
-    it('should return unauthorized when user or password are wrong', (done) => { 
+    it('should return 401 when user or password are wrong', (done) => { 
         request(server).post(`/auth/login`)
           .send( { username: "notExistingUser", password: client.email } )
           .end((err, res) => { 
@@ -35,6 +35,24 @@ describe('Auth API Integration Tests', () => {
             done(); 
           }); 
     });
+
+    it('should return 400 when user is not present', (done) => { 
+      request(server).post(`/auth/login`)
+        .send( { password: client.email } )
+        .end((err, res) => { 
+          expect(res.statusCode).to.equal(400); 
+          done(); 
+        }); 
+  });
+
+  it('should return 400 when user or is not present', (done) => { 
+    request(server).post(`/auth/login`)
+      .send( { username: "notExistingUser" } )
+      .end((err, res) => { 
+        expect(res.statusCode).to.equal(400); 
+        done(); 
+      }); 
+});
 
   });
 
