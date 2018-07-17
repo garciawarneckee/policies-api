@@ -32,7 +32,31 @@ describe('Policy API Integration Tests', () => {
             done(); 
           }); 
       });
-  
+
+      it('should return 400 when quantity param is not present', (done) => { 
+        request(server).get(`/policies/?name=${client.name}&offset=0`)
+          .end((err, res) => { 
+            expect(res.statusCode).to.equal(400);
+            done(); 
+          }); 
+      });
+
+      it('should return 400 when quantity param is not present', (done) => { 
+        request(server).get(`/policies/?name=${client.name}&quantity=10`)
+          .end((err, res) => { 
+            expect(res.statusCode).to.equal(400);
+            done(); 
+          }); 
+      });
+      
+      it('should return 400 when name param is not present', (done) => { 
+        request(server).get(`/policies/?offset=0&quantity=10`)
+          .end((err, res) => { 
+            expect(res.statusCode).to.equal(400);
+            done(); 
+          }); 
+      });
+
     });
   });
   
