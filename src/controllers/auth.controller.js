@@ -1,8 +1,8 @@
 const loginService = require("../service/login.service");
 
 exports.login = (req, res) => {
-    const username = req.body.username;
-    const password =  req.body.password; 
+    const username = (req.body.username) ? req.body.username : res.sendStatus(400);
+    const password =  (req.body.password) ? req.body.password : res.sendStatus(400); 
     loginService.login(username, password)
         .then((client) => {
             if(!client){
