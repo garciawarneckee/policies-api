@@ -35,7 +35,7 @@ npm start
 To run the integration test and unit tests
 
 ```
-npm tests
+npm test
 ```
 
 ### Break down into end to end tests
