@@ -57,6 +57,14 @@ describe('Policy API Integration Tests', () => {
           }); 
       });
 
+      it('should return 404 when client is not found', (done) => { 
+        request(server).get(`/policies/?name=fakeClientName&offset=0&quantity=10`)
+          .end((err, res) => { 
+            expect(res.statusCode).to.equal(404);
+            done(); 
+          }); 
+      });
+
     });
   });
   

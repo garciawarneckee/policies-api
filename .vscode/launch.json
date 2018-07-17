@@ -16,7 +16,8 @@
                 "${workspaceFolder}/test"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "env": { "NODE_ENV": "mocha" }
         },
         {
             "type": "node",
@@ -30,7 +31,8 @@
                 "${file}"
             ],
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
+            "internalConsoleOptions": "neverOpen",
+            "env": { "NODE_ENV": "mocha" }
         },
         {
             "type": "node",

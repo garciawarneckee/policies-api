@@ -16,10 +16,10 @@ exports.getByAllByName = async (req, res) => {
   if(!client) { 
     res.status(404).send({ message: "Client not found" }); 
     return; 
+  } else {
+    const policies = await policyService.getAllByClientId(client.id, offset, quantity);
+    res.send( policies );
   }
-  
-  const policies = await policyService.getAllByClientId(client.id, offset, quantity);
 
-  res.send( policies );
 }
 
