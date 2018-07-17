@@ -55,7 +55,7 @@ describe('Client API Integration Tests', () => {
       }); 
     });
 
-    it('should return 404 if there is not client with proviede name', (done) => {
+    it('should return 404 if there is not client with provided name', (done) => {
       request(server).get(`/clients/?name=fakeName`)
       .end( (err, res) => { 
         expect(res.statusCode).to.equal(404);
