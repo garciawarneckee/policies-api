@@ -2,7 +2,7 @@ const server = require("./server");
 
 const clientRoutes = require("./src/clients/clients.routes");
 const policiesRoutes = require("./src/policies/policy.routes");
-const authRoutes = require("./src/routes/auth.routes");
+const authRoutes = require("./src/auth/auth.routes");
 
 server.use("/clients", clientRoutes);
 server.use("/policies", policiesRoutes);

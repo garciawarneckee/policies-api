@@ -7,9 +7,17 @@ const PolicyNotFoundError = require('../exceptions').PolicyNotFoundError;
 //TODO DOCUMENTATION!!!
 
 getById = async (req, res) => {
-	const id = req.params.id;
-	const client = await clientService.getById(id);
-	if (client === undefined) { res.sendStatus(404); } else { res.send(client); }
+	try {
+		const id = req.params.id;
+		const client = await clientService.getById(id);
+		 res.send(client);
+	} catch(error) {
+		switch (error.constructor) {
+			case ClientNotFoundError: res.status(404).send(error.message); break;
+			default: res.status(500).send(error.message);
+		}
+	}
+	
 }
 
 getByName = async (req, res) => {
@@ -29,8 +37,11 @@ getByPolicyNumber = async (req, res) => {
 		const client = await clientService.getById(policy.clientId);
 		res.send(client);
 	} catch (error) {
-		if (error instanceof ClientNotFoundError || error instanceof PolicyNotFoundError) { res.status(404).send(error.message); }
-		else { res.status(500).send(error.message); }
+		switch (error.constructor) {
+			case PolicyNotFoundError:
+			case ClientNotFoundError: res.status(404).send(error.message); break;
+			default: res.status(500).send(error.message);
+		}
 	}
 }
 

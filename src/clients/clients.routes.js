@@ -5,7 +5,7 @@ const router = express.Router();
 const clientController = require('./client.controller');
 const clientValidation = require('./client.validation');
 
-const authMiddleware = require('../middleware/auth.middleware');
+const authMiddleware = require('../auth/auth.middleware');
 
 router.get("/:id", [authMiddleware.isUserOrAdmin, validation(clientValidation.getById), clientController.getById]);
 router.get("/", [authMiddleware.isUserOrAdmin, validation(clientValidation.getByName), clientController.getByName]);
