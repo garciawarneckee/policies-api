@@ -1,7 +1,6 @@
 const axios = require("axios");
 const config = require("../../config");
 
-const GetAllPoliciesError = require('../exceptions').GetAllPoliciesError;
 const PaginationError = require('../exceptions').PaginationError;
 const ExternalServiceError = require('../exceptions').ExternalServiceError;
 const PolicyNotFoundError = require('../exceptions').PolicyNotFoundError;
@@ -21,13 +20,19 @@ getAllByClientId = async (id, offset, quantity) => {
 		const page = buildPage(policies, offset, quantity);
 		return page;
 	} catch (error) {
-		throw new GetAllPoliciesError("An error has happend trying to get the policies");
+		switch(error.constructor) {
+			case PaginationError: throw error;
+			default: throw new ExternalServiceError('An error has happend trying to get the policies');
+		}
+		
 	}
 }
 
 /**
  * Retrieves a single policy by its id.
  * @param { Number } id policy unique identification.
+ * @throws { PolicyNotFoundError } if there is not policy with the provided id.
+ * @throws { ExternalServiceError } if there is an error while fetching the external data.
  * @return a policy.
  */
 getById = async (id) => {
@@ -39,8 +44,8 @@ getById = async (id) => {
 		return policy;
 	} catch(error) {
 		switch(error.constructor) {
-			case PolicyNotFoundError: throw new PolicyNotFoundError(error.message); break;
-			defualt: throw new ExternalServiceError(error.message);  
+			case PolicyNotFoundError: throw error;
+			default: throw new ExternalServiceError('An error has happend trying to get the policies');  
 		}
 	}
 
@@ -53,9 +58,15 @@ getById = async (id) => {
  * @return pagination data structure.
  */
 buildPage = (data, offset, pageSize) => {
-	if (!data) { throw new PaginationError("There is no data to build a page"); }
+	if (!data) { throw new PaginationError('There is no data to build a page'); }
 	const contentData = data.slice(offset, offset + pageSize);
-	return { content: contentData, offset: offset, quantity: pageSize };
+	return { 
+		content: contentData, 
+		offset: offset, 
+		quantity: pageSize, 
+		elementsInPage: contentData.length,
+		total: data.length
+	 };
 }
 
 module.exports = {
