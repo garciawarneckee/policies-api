@@ -2,8 +2,6 @@ const authService = require("./auth.service");
 
 const UnauthorizedError = require('../exceptions').UnauthorizedError;
 
-//TODO: DOCUMENTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 login = async (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -21,7 +19,6 @@ login = async (req, res) => {
 			default: res.status(500).send(error.message);
 		}
 	}
-
 }
 
 logout = (req, res) => {

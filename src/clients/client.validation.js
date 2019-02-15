@@ -15,5 +15,10 @@ module.exports = {
     params: {
       id: Joi.string().required()
     }
+  },
+  search: {
+    query: {
+      criteria: Joi.string().required()
+    }
   }
 }
