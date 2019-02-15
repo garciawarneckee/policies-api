@@ -16,11 +16,11 @@ getByName = async (name) => {
 	try {
 		const data = await getClients();
 		const client = data.clients.find(c => c.name == name);
-		if(client) { return client; }
+		if (client) { return client; }
 		else { throw new ClientNotFoundError(`There is no client with name ${name}`); }
-	} catch(error) {
+	} catch (error) {
 		throw new ExternalServiceError(error.message);
-	} 
+	}
 }
 
 /**
@@ -34,9 +34,9 @@ getById = async (id) => {
 	try {
 		const data = await getClients();
 		client = data.clients.find(c => c.id === id);
-		if(client) { return client; }
+		if (client) { return client; }
 		else { throw new ClientNotFoundError(`There is no client with name ${id}`); }
-	} catch(error) {
+	} catch (error) {
 		switch (error.constructor) {
 			case ClientNotFoundError: throw new ClientNotFoundError(error.message); break;
 			default: throw new ExternalServiceError(error.message);
@@ -55,9 +55,9 @@ getByNameAndEmail = async (name, email) => {
 	try {
 		const data = await getClients();
 		client = data.clients.find(c => c.name == name && c.email == email);
-		if(client) { return client; }
+		if (client) { return client; }
 		else { throw new ClientNotFoundError(`There is no client for the given data`); }
-	} catch(error) {
+	} catch (error) {
 		throw error;
 	}
 }
@@ -76,11 +76,17 @@ getClients = async () => {
 	}
 }
 
-search = (criteria) => { 
-	const refs = clientsIndex.search(criteria);
-	const result = clientsIndex.documentStore.getDoc(refs[0].ref);
-	if(result) { return result } 
-	else { throw new ClientNotFoundError('There is no client for the given data') }
+search = (criteria) => {
+	try {
+		const refs = clientsIndex.search(criteria);
+	if (refs[0]) { return clientsIndex.documentStore.getDoc(refs[0].ref); }
+	else { throw new ClientNotFoundError('There is no client for the given data'); }
+	} catch(error) {
+		switch(error.constructor) {
+			case ClientNotFoundError: throw error;
+			default: throw new Error(error.message);
+		}
+	}
 }
 
 module.exports = {

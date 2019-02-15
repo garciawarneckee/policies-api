@@ -4,6 +4,7 @@ const clientsFile = require('./clients.json');
 const clients = clientsFile.clients;
 
 const clientsIndex = elastic(function() {
+  this.addField('id');
   this.addField('name');
   this.addField('email');
   this.addField('role');
