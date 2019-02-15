@@ -7,6 +7,7 @@ const clientValidation = require('./client.validation');
 
 const authMiddleware = require('../auth/auth.middleware');
 
+router.get("/search", /** authMiddleware.isAdmin */ clientController.search);
 router.get("/:id", [authMiddleware.isUserOrAdmin, validation(clientValidation.getById), clientController.getById]);
 router.get("/", [authMiddleware.isUserOrAdmin, validation(clientValidation.getByName), clientController.getByName]);
 router.get("/policy/:id", [authMiddleware.isAdmin, validation(clientValidation.getByPolicyNumber), clientController.getByPolicyNumber]);

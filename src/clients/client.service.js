@@ -1,10 +1,9 @@
 const axios = require("axios");
 const config = require("../../config");
+const clientsIndex = require('../../database').clientsIndex;
 
 const ExternalServiceError = require('../exceptions').ExternalServiceError;
 const ClientNotFoundError = require('../exceptions').ClientNotFoundError;
-
-//this.getClients = this.getClients.bind(this);
 
 /**
  * Retrieves a client by its name.
@@ -77,8 +76,16 @@ getClients = async () => {
 	}
 }
 
+search = (criteria) => { 
+	const refs = clientsIndex.search(criteria);
+	const result = clientsIndex.documentStore.getDoc(refs[0].ref);
+	if(result) { return result } 
+	else { throw new ClientNotFoundError('There is no client for the given data') }
+}
+
 module.exports = {
 	getByName,
 	getById,
-	getByNameAndEmail
+	getByNameAndEmail,
+	search
 }
