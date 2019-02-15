@@ -60,6 +60,12 @@ getByPolicyNumber = async (req, res) => {
 	}
 }
 
+/**
+ * Retrieves a client by the provided criteria.
+ * @throws { ClientNotFoundError } if there is not client that matches the provided criteria.
+ * @throws { Error } if there is another unexpected error not related to the business.
+ * @returns a client.
+ */
 search = (req, res) => {
 	try {
 		const criteria = req.query.criteria;

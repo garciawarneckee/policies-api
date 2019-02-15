@@ -76,6 +76,11 @@ getClients = async () => {
 	}
 }
 
+/**
+ * Performs a full text search based on the provided criteria.
+ * @throws { ClientNotFoundError } if there is not client that matches the provided criteria.
+ * @throws { Error } if there is another unexpected error not related to the business.
+ */
 search = (criteria) => {
 	try {
 		const refs = clientsIndex.search(criteria);
