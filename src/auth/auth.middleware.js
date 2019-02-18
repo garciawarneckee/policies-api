@@ -20,7 +20,7 @@ isUserOrAdmin = (req, res, next) => {
 }
 
 isAdmin = (req, res, next) => {
-	if (process.env.NODE_ENV === 'mocha') { 
+	if (!config.enableSecurityMiddleware) { 
 		next(); 
 		return;
 	}
@@ -32,7 +32,7 @@ isAdmin = (req, res, next) => {
 	}
 }
 
-hasRoleUserOrAdmin = (client) => { return client && (hasRoleUser(client) || hasRoleAdmin(admin)); }
+hasRoleUserOrAdmin = (client) => { return client && (hasRoleUser(client) || hasRoleAdmin(client)); }
 
 hasRoleUser = (client) => { return client && (client.role === 'user') }
 
