@@ -16,7 +16,7 @@ getAllByClientId = async (id, offset, quantity) => {
 	try {
 		const response = await axios.get(config.policiesEndpoint);
 		const data = response.data;
-		policies = data.policies.filter(p => p.clientId == id);
+		const policies = data.policies.filter(p => p.clientId == id);
 		const page = buildPage(policies, offset, quantity);
 		return page;
 	} catch (error) {
@@ -24,7 +24,6 @@ getAllByClientId = async (id, offset, quantity) => {
 			case PaginationError: throw error;
 			default: throw new ExternalServiceError('An error has happend trying to get the policies');
 		}
-		
 	}
 }
 
