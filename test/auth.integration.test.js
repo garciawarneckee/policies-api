@@ -22,7 +22,7 @@ describe('Auth API Integration Tests', () => {
         .send( { username: client.name, password: client.email } )
         .end((err, res) => { 
           expect(res.statusCode).to.equal(200); 
-          expect(res.body).to.eql({isLogged: true,  client: { id: client.id, name: client.name, role: client.role }});
+          expect(res.body).to.haveOwnProperty('token');
           done(); 
         }); 
     });

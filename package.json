@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "set NODE_ENV=mocha&& mocha"
+    "test": "set NODE_ENV=mocha&& nyc mocha --reporter=text"
   },
   "keywords": [
     "node"
@@ -33,7 +33,7 @@
     "axios-mock-adapter": "^1.15.0",
     "chai": "4.1.2",
     "mocha": "5.2.0",
-    "nyc": "12.0.1",
+    "nyc": "^12.0.1",
     "supertest": "^3.1.0"
   }
 }

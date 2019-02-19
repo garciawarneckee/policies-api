@@ -19,7 +19,11 @@ getByName = async (name) => {
 		if (client) { return client; }
 		else { throw new ClientNotFoundError(`There is no client with name ${name}`); }
 	} catch (error) {
-		throw new ExternalServiceError(error.message);
+		switch(error.constructor) {
+			case ClientNotFoundError: throw error;
+			default: throw new ExternalServiceError(error.message);
+		}
+		
 	}
 }
 
