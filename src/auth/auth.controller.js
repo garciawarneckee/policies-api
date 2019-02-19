@@ -6,36 +6,31 @@ login = async (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
 	try {
-		const client = await authService.login(username, password);
-		req.session.id = client.id;
-		req.session.name = client.name;
-		req.session.role = client.role;
-		req.session.save(() => { });
-		res.statusCode = 200;
-		res.send({ isLogged: true, client: { id: client.id, name: client.name, role: client.role } });
+		const token = await authService.login(username, password);
+		res.json({ token: token });
 	} catch (error) {
 		switch (error.constructor) {
-			case UnauthorizedError: res.status(401).send(error.message); break;
+			case UnauthorizedError: res.status(401).send(error.message);
 			default: res.status(500).send(error.message);
 		}
 	}
 }
 
 logout = (req, res) => {
-	req.session.destroy((err) => { if (err) { delete req.session } });
-	res.send({ message: "Logout successful" });
+	const token = req.body.token;
+	authService.logout(token);
+	res.sendStatus(200);
 }
 
-isLogged = (req, res) => {
-	if (req.session.name && req.session.id && req.session.role) {
-		res.send({ isLogged: true });
-	} else {
-		res.send(({ isLogged: false }));
-	}
+getLoggedUser = (req, res) => {
+	let token = req.headers['authorization'];
+	token = token.slice(7, token.length);
+	const user = authService.getLoggedUser(token);
+	res.json(user);
 }
 
 module.exports = {
 	login,
 	logout,
-	isLogged
+	getLoggedUser
 }
