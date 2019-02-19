@@ -17,9 +17,6 @@ describe('Policy API Integration Tests', () => {
         "role":"admin"
      }
 
-    const policy = {
-      id: '64cceef9-3a01-49ae-a23b-3761b604800b'
-    }
     describe('#GET / Policy', () => { 
       
       it('should get policies by name', (done) => { 
